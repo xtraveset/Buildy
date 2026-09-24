@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7F4;color:#15171B;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#15171B;text-decoration:none}
+a:hover{color:#3A5A0C}
+input{font-family:inherit}
+@keyframes bd-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</helmet>
+
+<header data-screen-label="Header" style="position:sticky;top:0;z-index:50;background:rgba(247,247,244,0.88);backdrop-filter:blur(12px);border-bottom:1px solid #E4E3DD">
+  <div style="max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <a href="#top" style="display:flex;align-items:center;gap:10px">
+      <span style="width:32px;height:32px;border-radius:9px;background:#15171B;color:#D4F27A;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px">B</span>
+      <span style="font-weight:800;font-size:20px;letter-spacing:-0.03em">Buildy</span>
+    </a>
+    <nav style="display:flex;gap:4px;flex-wrap:wrap">
+      <a href="#constructoras" style="padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;color:#3E4148" style-hover="background:#ECEBE5;color:#15171B">Constructoras</a>
+      <a href="#proveedores" style="padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;color:#3E4148" style-hover="background:#ECEBE5;color:#15171B">Proveedores</a>
+      <a href="#seguridad" style="padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;color:#3E4148" style-hover="background:#ECEBE5;color:#15171B">Seguridad y Pagos</a>
+      <a href="#faq" style="padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;color:#3E4148" style-hover="background:#ECEBE5;color:#15171B">Precios</a>
+    </nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="#" style="padding:10px 16px;border-radius:999px;font-size:14px;font-weight:700;border:1px solid #D9D8D1;background:#fff" style-hover="border-color:#15171B;color:#15171B">Iniciar sesión</a>
+      <a href="#registro" style="padding:10px 18px;border-radius:999px;font-size:14px;font-weight:700;background:#15171B;color:#fff" style-hover="background:#2B2E34;color:#fff">Registrarse gratis</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section data-screen-label="Hero" style="max-width:1240px;margin:0 auto;padding:88px 24px 72px;display:flex;flex-direction:column;align-items:center;text-align:center">
+  <div style="display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;border:1px solid #E4E3DD;background:#fff;font-size:13px;font-weight:600;color:#3E4148">
+    <span style="padding:3px 9px;border-radius:999px;background:#D4F27A;color:#15171B;font-family:'IBM Plex Mono',monospace;font-size:11px">NUEVO</span>
+    Comparativos automáticos con IA para licitaciones de obra
+  </div>
+  <h1 style="margin:28px 0 0;max-width:980px;font-size:clamp(38px,5.6vw,72px);line-height:1.02;letter-spacing:-0.045em;font-weight:800;text-wrap:balance">La plataforma inteligente para gestionar suministros y adjudicaciones de obra <span style="color:#6B7A3A">con total garantía</span></h1>
+  <p style="margin:24px 0 0;max-width:640px;font-size:clamp(17px,1.6vw,20px);line-height:1.55;color:#5A5D64;text-wrap:pretty">Automatiza comparativos, blinda tus pagos y trabaja solo con proveedores verificados. Todo el ciclo de compra de tu obra, en un único lugar.</p>
+
+  <div style="margin-top:44px;width:100%;max-width:880px;background:#fff;border:1px solid #E4E3DD;border-radius:20px;padding:8px;box-shadow:0 1px 0 rgba(20,22,27,0.03),0 18px 40px -18px rgba(20,22,27,0.18);display:flex;flex-wrap:wrap;gap:6px;text-align:left">
+    <div style="position:relative;flex:1.4 1 260px;padding:12px 18px;border-radius:14px;background:#F7F7F4">
+      <label style="display:block;font-size:12px;font-weight:700;color:#15171B">¿Qué material o servicio de obra necesitas?</label>
+      <input value="{{ q }}" onChange="{{ onQ }}" onFocus="{{ focusQ }}" onBlur="{{ blur }}" placeholder="Hormigón, Andamios, Pladur…" style="margin-top:4px;width:100%;border:0;outline:none;background:transparent;font-size:16px;font-weight:500;color:#15171B;padding:0">
+      <sc-if value="{{ showQList }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;background:#fff;border:1px solid #E4E3DD;border-radius:14px;padding:6px;box-shadow:0 20px 40px -16px rgba(20,22,27,0.25)">
+          <sc-for list="{{ qList }}" as="s" hint-placeholder-count="4">
+            <div onMouseDown="{{ s.pick }}" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600" style-hover="background:#F3F2EC">
+              <span>{{ s.name }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91">{{ s.count }} proveedores</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <div style="position:relative;flex:1 1 200px;padding:12px 18px;border-radius:14px;background:#F7F7F4">
+      <label style="display:block;font-size:12px;font-weight:700;color:#15171B">Ubicación o provincia</label>
+      <input value="{{ loc }}" onChange="{{ onLoc }}" onFocus="{{ focusLoc }}" onBlur="{{ blur }}" placeholder="Madrid, Valencia…" style="margin-top:4px;width:100%;border:0;outline:none;background:transparent;font-size:16px;font-weight:500;color:#15171B;padding:0">
+      <sc-if value="{{ showLocList }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;background:#fff;border:1px solid #E4E3DD;border-radius:14px;padding:6px;box-shadow:0 20px 40px -16px rgba(20,22,27,0.25)">
+          <sc-for list="{{ locList }}" as="p" hint-placeholder-count="4">
+            <div onMouseDown="{{ p.pick }}" style="padding:10px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600" style-hover="background:#F3F2EC">{{ p.name }}</div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <button onClick="{{ search }}" style="flex:0 0 auto;min-height:64px;padding:0 28px;border:0;border-radius:14px;background:#15171B;color:#fff;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px" style-hover="background:#2B2E34">
+      <span style="width:18px;height:18px;border:2.5px solid #D4F27A;border-radius:50%"></span>Buscar
+    </button>
+  </div>
+  <sc-if value="{{ hasResult }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:#EEF6D6;color:#2F3D0C;font-size:14px;font-weight:600">
+      <span style="width:8px;height:8px;border-radius:50%;background:#6B8E1E"></span>{{ resultText }}
+    </div>
+  </sc-if>
+
+  <div style="margin-top:36px;width:100%;max-width:880px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;text-align:left">
+    <a href="#constructoras" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-radius:18px;border:1px solid #E4E3DD;background:#fff;color:#15171B" style-hover="border-color:#15171B;color:#15171B">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91;letter-spacing:0.06em">SOY CONSTRUCTOR</div>
+        <div style="margin-top:6px;font-size:18px;font-weight:700;letter-spacing:-0.02em">Busco proveedor</div>
+      </div>
+      <span style="width:40px;height:40px;border-radius:50%;background:#15171B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px">→</span>
+    </a>
+    <a href="#proveedores" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-radius:18px;border:1px solid #E4E3DD;background:#fff;color:#15171B" style-hover="border-color:#15171B;color:#15171B">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91;letter-spacing:0.06em">SOY PROVEEDOR</div>
+        <div style="margin-top:6px;font-size:18px;font-weight:700;letter-spacing:-0.02em">Ofrezco servicios</div>
+      </div>
+      <span style="width:40px;height:40px;border-radius:50%;background:#D4F27A;color:#15171B;display:flex;align-items:center;justify-content:center;font-size:18px">→</span>
+    </a>
+  </div>
+</section>
+
+<section id="seguridad" data-screen-label="Seguridad" style="background:#15171B;color:#F2F2EE">
+  <div style="max-width:1240px;margin:0 auto;padding:104px 24px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px">
+      <div style="max-width:640px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#D4F27A">SEGURIDAD FINANCIERA Y JURÍDICA</div>
+        <h2 style="margin:16px 0 0;font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-0.04em;font-weight:800;text-wrap:balance">Cada euro y cada entrega, protegidos por infraestructura regulada.</h2>
+      </div>
+      <p style="margin:0;max-width:380px;font-size:16px;line-height:1.6;color:#A9ACB2">Buildy no toca tu dinero. Los fondos se custodian en entidades reguladas y solo se liberan cuando la obra lo confirma.</p>
+    </div>
+
+    <div style="margin-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px">
+      <div style="border:1px solid #2C2F36;border-radius:24px;padding:32px;background:#1B1D22;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0;font-size:26px;letter-spacing:-0.03em;font-weight:800">Pagos Blindados</h3>
+            <p style="margin:10px 0 0;max-width:420px;font-size:15px;line-height:1.6;color:#A9ACB2">Depósito en garantía (escrow) sobre la infraestructura regulada de Mangopay. Se retiene el {{ ret }}% del importe hasta la validación en obra.</p>
+          </div>
+          <span style="padding:6px 12px;border-radius:999px;border:1px solid #3A3D44;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D8DAD0">SOCIO · MANGOPAY</span>
+        </div>
+        <div style="border-radius:18px;background:#F7F7F4;color:#15171B;padding:22px">
+          <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91">PEDIDO #BLD-20417 · HORMIGÓN HA-25</div>
+              <div style="margin-top:4px;font-size:28px;font-weight:800;letter-spacing:-0.03em">48.600,00 €</div>
+            </div>
+            <span style="align-self:flex-start;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;background:{{ statusBg }};color:{{ statusColor }}">{{ statusText }}</span>
+          </div>
+          <div style="margin-top:18px;height:14px;border-radius:999px;background:#E4E3DD;overflow:hidden;display:flex">
+            <div style="width:{{ releasedW }};background:#15171B;transition:width 600ms cubic-bezier(.2,.8,.2,1)"></div>
+            <div style="flex:1;background:repeating-linear-gradient(135deg,#C9E86A 0 6px,#D4F27A 6px 12px)"></div>
+          </div>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:600;flex-wrap:wrap">
+            <span style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:3px;background:#15171B"></span>Liberado al proveedor · {{ releasedAmt }}</span>
+            <span style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:3px;background:#C9E86A"></span>En custodia · {{ heldAmt }}</span>
+          </div>
+          <button onClick="{{ toggleRelease }}" style="margin-top:18px;width:100%;padding:14px;border-radius:12px;border:1px solid #15171B;background:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;color:#15171B" style-hover="background:#15171B;color:#fff">{{ releaseBtn }}</button>
+        </div>
+      </div>
+
+      <div style="border:1px solid #2C2F36;border-radius:24px;padding:32px;background:#1B1D22;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0;font-size:26px;letter-spacing:-0.03em;font-weight:800">Protección Jurídica</h3>
+            <p style="margin:10px 0 0;max-width:420px;font-size:15px;line-height:1.6;color:#A9ACB2">Cobertura de responsabilidad civil profesional en obra respaldada por Hiscox para los pedidos adjudicados en Buildy.</p>
+          </div>
+          <span style="padding:6px 12px;border-radius:999px;border:1px solid #3A3D44;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D8DAD0">SOCIO · HISCOX</span>
+        </div>
+        <div style="display:grid;gap:10px">
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:18px;border-radius:16px;border:1px solid #2C2F36">
+            <span style="flex:0 0 28px;height:28px;border-radius:8px;background:#D4F27A;color:#15171B;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">✓</span>
+            <div><div style="font-weight:700;font-size:16px">Responsabilidad civil en obra</div><div style="margin-top:4px;font-size:14px;line-height:1.55;color:#A9ACB2">Daños materiales y personales derivados de la ejecución del suministro.</div></div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:18px;border-radius:16px;border:1px solid #2C2F36">
+            <span style="flex:0 0 28px;height:28px;border-radius:8px;background:#D4F27A;color:#15171B;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">✓</span>
+            <div><div style="font-weight:700;font-size:16px">Proveedores verificados</div><div style="margin-top:4px;font-size:14px;line-height:1.55;color:#A9ACB2">CIF, solvencia, certificados y seguros comprobados antes de poder ofertar.</div></div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:18px;border-radius:16px;border:1px solid #2C2F36">
+            <span style="flex:0 0 28px;height:28px;border-radius:8px;background:#D4F27A;color:#15171B;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">✓</span>
+            <div><div style="font-weight:700;font-size:16px">Mediación en incidencias</div><div style="margin-top:4px;font-size:14px;line-height:1.55;color:#A9ACB2">Si la entrega no se valida, el importe retenido queda bloqueado hasta resolver.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Flujo" style="max-width:1240px;margin:0 auto;padding:112px 24px">
+  <div style="max-width:720px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#6B7A3A">CÓMO FUNCIONA</div>
+    <h2 style="margin:16px 0 0;font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-0.04em;font-weight:800;text-wrap:balance">De la necesidad al pago liberado, en cuatro pasos.</h2>
+  </div>
+  <div style="margin-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+    <div style="border:1px solid #E4E3DD;border-radius:22px;background:#fff;padding:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:#15171B;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">1</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91">DÍA 0</span></div>
+      <div style="border-radius:14px;background:#F7F7F4;padding:14px;display:grid;gap:8px;font-size:12px">
+        <div style="font-weight:700;font-size:13px">Nueva licitación</div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid #ECEBE5"><span style="color:#8A8C91">Material</span><b>Pladur 15 mm</b></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid #ECEBE5"><span style="color:#8A8C91">Cantidad</span><b>2.400 m²</b></div>
+      </div>
+      <div><h3 style="margin:0;font-size:20px;letter-spacing:-0.02em;font-weight:800">Licitación</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.55;color:#5A5D64">El responsable de obra publica la necesidad con cantidades, plazos y ubicación.</p></div>
+    </div>
+    <div style="border:1px solid #E4E3DD;border-radius:22px;background:#fff;padding:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:#15171B;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">2</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91">24–72 H</span></div>
+      <div style="border-radius:14px;background:#F7F7F4;padding:14px;display:grid;gap:6px;font-size:12px">
+        <div style="font-weight:700;font-size:13px">Comparativo automático</div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#D4F27A;border-radius:8px"><b>Oferta A · mejor</b><b>18.240 €</b></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid #ECEBE5"><span>Oferta B</span><span>19.980 €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid #ECEBE5"><span>Oferta C</span><span>21.410 €</span></div>
+      </div>
+      <div><h3 style="margin:0;font-size:20px;letter-spacing:-0.02em;font-weight:800">Comparativo</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.55;color:#5A5D64">Los proveedores envían ofertas y Buildy genera el comparativo normalizado al instante.</p></div>
+    </div>
+    <div style="border:1px solid #E4E3DD;border-radius:22px;background:#fff;padding:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:#15171B;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">3</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91">1 CLIC</span></div>
+      <div style="border-radius:14px;background:#F7F7F4;padding:14px;display:grid;gap:8px;font-size:12px">
+        <div style="font-weight:700;font-size:13px">Adjudicado a Oferta A</div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#15171B;color:#fff;border-radius:8px"><span style="width:10px;height:10px;border-radius:50%;background:#D4F27A"></span><span>Fondos bloqueados en escrow</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid #ECEBE5"><span style="color:#8A8C91">En custodia</span><b>18.240 €</b></div>
+      </div>
+      <div><h3 style="margin:0;font-size:20px;letter-spacing:-0.02em;font-weight:800">Adjudicación y Escrow</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.55;color:#5A5D64">Seleccionas el pedido y el pago queda bloqueado de forma segura en Mangopay.</p></div>
+    </div>
+    <div style="border:1px solid #E4E3DD;border-radius:22px;background:#fff;padding:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:40px;height:40px;border-radius:12px;background:#D4F27A;color:#15171B;display:flex;align-items:center;justify-content:center;font-weight:800">4</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A8C91">ENTREGA</span></div>
+      <div style="border-radius:14px;background:#F7F7F4;padding:14px;display:grid;gap:8px;font-size:12px">
+        <div style="font-weight:700;font-size:13px">Albarán validado en obra</div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid #ECEBE5"><span style="color:#8A8C91">Recepción</span><b>✓ Conforme</b></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#EEF6D6;border-radius:8px"><span>Pago liberado</span><b>18.240 €</b></div>
+      </div>
+      <div><h3 style="margin:0;font-size:20px;letter-spacing:-0.02em;font-weight:800">Entrega y Liquidación</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.55;color:#5A5D64">Se ejecuta el suministro, se aprueba en obra y el pago se libera automáticamente.</p></div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Partners" style="border-top:1px solid #E4E3DD;border-bottom:1px solid #E4E3DD;background:#fff">
+  <div style="max-width:1240px;margin:0 auto;padding:72px 24px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <h2 style="margin:0;max-width:560px;font-size:clamp(24px,2.6vw,32px);line-height:1.15;letter-spacing:-0.03em;font-weight:800;text-wrap:balance">Distribuidores y marcas que dan autoridad a cada comparativo</h2>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A8C91">+1.200 PROVEEDORES VERIFICADOS</span>
+    </div>
+    <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));border-top:1px solid #ECEBE5;border-left:1px solid #ECEBE5">
+        <sc-for list="{{ partners }}" as="p" hint-placeholder-count="8">
+          <div style="height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-right:1px solid #ECEBE5;border-bottom:1px solid #ECEBE5;color:#8A8C91" style-hover="background:#F7F7F4;color:#15171B">
+            <span style="font-weight:800;font-size:17px;letter-spacing:-0.02em">{{ p.name }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em">{{ p.cat }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isCarousel }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:40px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">{{ marquee }}</div>
+    </sc-if>
+  </div>
+</section>
+
+<section data-screen-label="Perfiles" style="max-width:1240px;margin:0 auto;padding:112px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px">
+  <div id="constructoras" style="border-radius:28px;background:#15171B;color:#F2F2EE;padding:44px;display:flex;flex-direction:column;justify-content:space-between;gap:48px;min-height:440px">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#D4F27A">PARA CONSTRUCTORAS</div>
+      <h3 style="margin:18px 0 0;font-size:clamp(28px,3vw,38px);line-height:1.1;letter-spacing:-0.035em;font-weight:800;text-wrap:balance">Centraliza la gestión de tus subcontratistas, ahorra tiempo en comparativos y blinda tus obras.</h3>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span style="padding:8px 14px;border-radius:999px;border:1px solid #3A3D44;font-size:13px;font-weight:600">Comparativos en minutos</span>
+        <span style="padding:8px 14px;border-radius:999px;border:1px solid #3A3D44;font-size:13px;font-weight:600">Pagos contra validación</span>
+        <span style="padding:8px 14px;border-radius:999px;border:1px solid #3A3D44;font-size:13px;font-weight:600">Multi-obra</span>
+      </div>
+      <a href="#" style="align-self:flex-start;padding:14px 22px;border-radius:999px;background:#D4F27A;color:#15171B;font-weight:700;font-size:15px" style-hover="background:#E2F79E;color:#15171B">Ver soluciones para constructoras →</a>
+    </div>
+  </div>
+  <div id="proveedores" style="border-radius:28px;background:#D4F27A;color:#15171B;padding:44px;display:flex;flex-direction:column;justify-content:space-between;gap:48px;min-height:440px">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#3F4A1A">PARA PROVEEDORES</div>
+      <h3 style="margin:18px 0 0;font-size:clamp(28px,3vw,38px);line-height:1.1;letter-spacing:-0.035em;font-weight:800;text-wrap:balance">Recibe licitaciones cualificadas, despide los impagos y escala tu facturación.</h3>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span style="padding:8px 14px;border-radius:999px;border:1px solid rgba(21,23,27,0.25);font-size:13px;font-weight:600">Cobro garantizado</span>
+        <span style="padding:8px 14px;border-radius:999px;border:1px solid rgba(21,23,27,0.25);font-size:13px;font-weight:600">Demanda en tu zona</span>
+        <span style="padding:8px 14px;border-radius:999px;border:1px solid rgba(21,23,27,0.25);font-size:13px;font-weight:600">Sin cuota fija</span>
+      </div>
+      <a href="#" style="align-self:flex-start;padding:14px 22px;border-radius:999px;background:#15171B;color:#fff;font-weight:700;font-size:15px" style-hover="background:#2B2E34;color:#fff">Ver soluciones para proveedores →</a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" data-screen-label="FAQ" style="max-width:1240px;margin:0 auto;padding:0 24px 112px;display:flex;flex-wrap:wrap;gap:48px">
+  <div style="flex:1 1 300px;max-width:420px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#6B7A3A">PREGUNTAS FRECUENTES</div>
+    <h2 style="margin:16px 0 0;font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-0.04em;font-weight:800">Lo que nos preguntan antes de empezar.</h2>
+    <p style="margin:18px 0 0;font-size:15px;line-height:1.6;color:#5A5D64">¿Otra duda? Escríbenos a <a href="#" style="font-weight:700;border-bottom:1px solid #15171B">hola@buildy.es</a></p>
+  </div>
+  <div style="flex:2 1 520px;min-width:0;border-top:1px solid #E4E3DD">
+    <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+      <div style="border-bottom:1px solid #E4E3DD">
+        <button onClick="{{ f.toggle }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0;border:0;background:transparent;font-family:inherit;text-align:left;cursor:pointer;color:#15171B">
+          <span style="font-size:18px;font-weight:700;letter-spacing:-0.02em">{{ f.q }}</span>
+          <span style="flex:0 0 36px;height:36px;border-radius:50%;border:1px solid #D9D8D1;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;background:{{ f.iconBg }}">{{ f.icon }}</span>
+        </button>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:0 60px 24px 0;font-size:16px;line-height:1.65;color:#5A5D64;text-wrap:pretty">{{ f.a }}</p>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="registro" data-screen-label="CTA final" style="max-width:1240px;margin:0 auto;padding:0 24px 96px">
+  <div style="border-radius:32px;background:#15171B;color:#F2F2EE;padding:clamp(40px,6vw,80px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="max-width:700px">
+      <h2 style="margin:0;font-size:clamp(34px,4.6vw,60px);line-height:1.02;letter-spacing:-0.045em;font-weight:800;text-wrap:balance">Tu próxima obra, <span style="color:#D4F27A">sin sustos en las compras.</span></h2>
+      <p style="margin:20px 0 0;font-size:18px;line-height:1.55;color:#A9ACB2">Crea tu cuenta gratis y publica tu primera licitación hoy. Sin tarjeta, sin permanencia.</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="#" style="padding:16px 26px;border-radius:999px;background:#D4F27A;color:#15171B;font-weight:800;font-size:16px" style-hover="background:#E2F79E;color:#15171B">Registrarse gratis</a>
+      <a href="#" style="padding:16px 26px;border-radius:999px;border:1px solid #3A3D44;color:#F2F2EE;font-weight:700;font-size:16px" style-hover="border-color:#F2F2EE;color:#fff">Hablar con ventas</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer data-screen-label="Footer" style="border-top:1px solid #E4E3DD">
+  <div style="max-width:1240px;margin:0 auto;padding:64px 24px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:40px">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <a href="#top" style="display:flex;align-items:center;gap:10px"><span style="width:28px;height:28px;border-radius:8px;background:#15171B;color:#D4F27A;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px">B</span><span style="font-weight:800;font-size:18px;letter-spacing:-0.03em">Buildy</span></a>
+      <p style="margin:0;font-size:14px;line-height:1.6;color:#5A5D64;max-width:240px">Contratación, comparativos y pagos en garantía para la construcción.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8C91;margin-bottom:4px">EMPRESAS</div>
+      <a href="#">Para constructoras</a><a href="#">Para proveedores</a><a href="#">Precios</a><a href="#">Hablar con ventas</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8C91;margin-bottom:4px">RECURSOS</div>
+      <a href="#">Centro de ayuda</a><a href="#">Guía del escrow</a><a href="#">Blog de obra</a><a href="#">Plantillas de licitación</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8C91;margin-bottom:4px">CATEGORÍAS POPULARES</div>
+      <a href="#">Hormigón y áridos</a><a href="#">Andamios</a><a href="#">Pladur y tabiquería</a><a href="#">Acero corrugado</a><a href="#">Alquiler de maquinaria</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8C91;margin-bottom:4px">LEGAL</div>
+      <a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a><a href="#">Condiciones de uso</a><a href="#">Condiciones del escrow</a>
+    </div>
+  </div>
+  <div style="max-width:1240px;margin:0 auto;padding:24px;border-top:1px solid #E4E3DD;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8A8C91">
+    <span>© 2026 Buildy Technologies S.L.</span>
+    <span>Pagos procesados por Mangopay · Seguros por Hiscox</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;partnerLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;grid&quot;,&quot;carrusel&quot;],&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;'grid'|'carrusel'&quot;},&quot;retentionPct&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:20,&quot;max&quot;:80,&quot;step&quot;:5,&quot;unit&quot;:&quot;%&quot;,&quot;default&quot;:50,&quot;tsType&quot;:&quot;number&quot;},&quot;faqMultiple&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const MATERIALS = [["Hormigón HA-25",148],["Hormigón bombeado",96],["Andamios tubulares",72],["Andamios multidireccionales",41],["Pladur y tabiquería seca",133],["Acero corrugado B500S",88],["Áridos y gravas",117],["Ladrillo cerámico",64],["Alquiler de maquinaria",152],["Impermeabilización",58],["Aislamiento térmico",77],["Encofrados",49]];
+const PROVINCES = ["Madrid","Barcelona","Valencia","Sevilla","Málaga","Alicante","Bizkaia","Zaragoza","Murcia","A Coruña","Asturias","Navarra","Toledo","Cádiz","Baleares"];
+const PARTNERS = [["Hormigones Norte","HORMIGÓN"],["Áridos Levante","ÁRIDOS"],["Aceros Castilla","ACERO"],["Yesos Ibérica","PLADUR"],["Andamios Tajo","ANDAMIOS"],["Cerámicas Duero","CERÁMICA"],["Maderas Atlántico","MADERA"],["Aislatec Sur","AISLAMIENTO"]];
+const eur = n => n.toLocaleString("es-ES",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
+
+class Component extends DCLogic {
+  state = { q: "", loc: "", focus: null, result: null, released: false, open: [0] };
+  renderVals() {
+    const s = this.state, ret = this.props.retentionPct ?? 50, multi = this.props.faqMultiple ?? false;
+    const layout = this.props.partnerLayout ?? "grid";
+    const qn = s.q.trim().toLowerCase(), ln = s.loc.trim().toLowerCase();
+    const qList = MATERIALS.filter(([n]) => !qn || n.toLowerCase().includes(qn)).slice(0,5)
+      .map(([name,count]) => ({ name, count, pick: () => this.setState({ q: name, focus: null }) }));
+    const locList = PROVINCES.filter(p => !ln || p.toLowerCase().startsWith(ln)).slice(0,5)
+      .map(name => ({ name, pick: () => this.setState({ loc: name, focus: null }) }));
+    const total = 48600, releasedPct = s.released ? 100 : 100 - ret;
+    const faqsRaw = [
+      ["¿Qué comisión cobra Buildy?", "Registrarse y publicar licitaciones es gratis para constructoras. El proveedor adjudicado paga una comisión del 2,5% sobre el importe liquidado, que incluye la custodia en escrow y la cobertura asociada. Sin cuotas fijas ni permanencia."],
+      ["¿Cómo funciona exactamente el escrow?", `Al adjudicar, el importe del pedido se deposita en una cuenta de custodia de Mangopay, entidad de dinero electrónico regulada. Se libera el ${100-ret}% al inicio del suministro y se retiene el ${ret}% restante hasta que el responsable de obra valida la entrega.`],
+      ["¿En qué plazo se libera el pago?", "En cuanto se valida el albarán en obra, el importe retenido se transfiere automáticamente al proveedor en 24–48 horas hábiles. Si no hay validación ni incidencia en 7 días, se libera por defecto."],
+      ["¿Qué cubre la garantía de Hiscox?", "La póliza de responsabilidad civil profesional cubre daños materiales y personales a terceros derivados de la ejecución de los pedidos adjudicados en Buildy, según las condiciones particulares de cada categoría."],
+      ["¿Cómo se verifica a los proveedores?", "Comprobamos CIF, situación con Hacienda y Seguridad Social, seguros en vigor y certificados técnicos antes de que un proveedor pueda enviar ofertas."]
+    ];
+    const faqs = faqsRaw.map(([q,a],i) => {
+      const open = s.open.includes(i);
+      return { q, a, open, icon: open ? "−" : "+", iconBg: open ? "#D4F27A" : "#fff",
+        toggle: () => this.setState(st => ({ open: st.open.includes(i) ? st.open.filter(x => x !== i) : (multi ? [...st.open, i] : [i]) })) };
+    });
+    const partners = PARTNERS.map(([name,cat]) => ({ name, cat }));
+    return {
+      q: s.q, loc: s.loc, qList, locList, ret,
+      showQList: s.focus === "q" && qList.length > 0,
+      showLocList: s.focus === "loc" && locList.length > 0,
+      onQ: e => this.setState({ q: e.target.value, result: null }),
+      onLoc: e => this.setState({ loc: e.target.value, result: null }),
+      focusQ: () => this.setState({ focus: "q" }),
+      focusLoc: () => this.setState({ focus: "loc" }),
+      blur: () => setTimeout(() => this.setState({ focus: null }), 120),
+      search: () => {
+        const m = MATERIALS.find(([n]) => n.toLowerCase().includes(qn));
+        const count = m ? Math.max(3, Math.round(m[1] / (ln ? 6 : 1))) : 0;
+        this.setState({ focus: null, result: count
+          ? `${count} proveedores verificados de ${m[0]}${s.loc ? " en " + s.loc : " en España"}`
+          : (qn ? "Sin resultados exactos — publica una licitación y te encontramos proveedor" : "Escribe un material o servicio para buscar") });
+      },
+      hasResult: !!s.result, resultText: s.result,
+      releasedW: releasedPct + "%",
+      releasedAmt: eur(total * releasedPct / 100),
+      heldAmt: eur(total * (100 - releasedPct) / 100),
+      statusText: s.released ? "Liquidado" : `${ret}% en custodia`,
+      statusBg: s.released ? "#15171B" : "#D4F27A", statusColor: s.released ? "#fff" : "#15171B",
+      releaseBtn: s.released ? "Reiniciar demostración" : "Validar entrega en obra →",
+      toggleRelease: () => this.setState(st => ({ released: !st.released })),
+      faqs, partners,
+      isGrid: layout === "grid", isCarousel: layout !== "grid",
+      marquee: React.createElement("div", { style: { display: "flex", width: "max-content", animation: "bd-marquee 32s linear infinite" } },
+        [...partners, ...partners].map((p, i) => React.createElement("div", { key: i, style: { width: 240, height: 96, flex: "0 0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4, borderRight: "1px solid #ECEBE5", color: "#6A6C71" } },
+          React.createElement("span", { style: { fontWeight: 800, fontSize: 17, letterSpacing: "-0.02em" } }, p.name),
+          React.createElement("span", { style: { fontFamily: "'IBM Plex Mono',monospace", fontSize: 10, letterSpacing: "0.06em" } }, p.cat))))
+    };
+  }
+}
+</script>
+</body>
+</html>
